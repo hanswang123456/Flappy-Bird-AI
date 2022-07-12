@@ -15,7 +15,7 @@ pygame.init()
 
 
 
-birdPics = [pygame.image.load("flappybird1.png"),pygame.image.load("flappybird1.png")]
+birdPic = pygame.image.load("flappybird1.png")
 
 bottomPipeImage = pygame.image.load("pipe.png")
 bottomPipeImage = pygame.transform.scale(bottomPipeImage, (80, 300))
@@ -31,7 +31,7 @@ generation=0
 
   
 class Flapper:
-    IMGS = birdPics
+    IMG = birdPic
     MAX_ROT = 25
     ROT_VEL = 20
     ANIMATION_TIME = 10
@@ -44,7 +44,7 @@ class Flapper:
         self.speed = 0
         self.height = self.y
         self.img_count = 0
-        self.img = self.IMGS[0]
+        self.img = self.IMG
         
     def jump(self):
         self.speed = -5
@@ -70,17 +70,6 @@ class Flapper:
                     self.tilt-=self.ROT_VEL
                     
     def draw(self, screen):
-        self.img_count+=1
-        if self.img_count<self.ANIMATION_TIME:
-            self.img = self.IMGS[0]
-        elif self.img_count<self.ANIMATION_TIME*2:
-            self.img = self.IMGS[1]
-        elif self.img_count<self.ANIMATION_TIME*2+1:
-            self.img = self.IMGS[0]
-            self.img_count = 0
-        if self.tilt<=-80:
-            self.img = self.IMGS[0]
-            self.img_count = self.ANIMATION_TIME*2
     
         rotate_image = pygame.transform.rotate(self.img, self.tilt)
         new_rect = rotate_image.get_rect(center = self.img.get_rect(topleft = (self.x, self.y)).center)
